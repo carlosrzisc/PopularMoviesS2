@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
@@ -45,6 +46,7 @@ public class MoviesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         setHasOptionsMenu(true);
         moviesAdapter = new MoviesAdapter(getActivity(), new MoviesAdapter.OnMovieClickListener() {
             @Override
@@ -74,13 +76,21 @@ public class MoviesFragment extends Fragment {
                 moviesAdapter.clear();
             }
         };
-        fetchMovies();
+
+        FragmentActivity activity = getActivity();
+        if (activity!= null && (Utility.hasInternetConnection(activity) || getSortBySelection().equalsIgnoreCase(FAVORITES))) {
+            activity.getSupportLoaderManager().initLoader(0, null, loaderCallbacks).forceLoad();
+        } else {
+            Toast.makeText(activity, getString(R.string.error_no_connection), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        fetchMovies();
+        if (getSortBySelection().equalsIgnoreCase(FAVORITES)) {
+            fetchMovies();
+        }
     }
 
     private String getSortBySelection() {
@@ -125,14 +135,11 @@ public class MoviesFragment extends Fragment {
     }
 
     private void fetchMovies() {
-        if (getActivity()!= null && (Utility.hasInternetConnection(getActivity()) || getSortBySelection().equalsIgnoreCase(FAVORITES))) {
-            if (getActivity().getSupportLoaderManager().getLoader(0) == null) {
-                getActivity().getSupportLoaderManager().initLoader(0, null, loaderCallbacks).forceLoad();
-            } else {
-                getActivity().getSupportLoaderManager().restartLoader(0, null, loaderCallbacks).forceLoad();
-            }
+        FragmentActivity activity = getActivity();
+        if (activity!= null && (Utility.hasInternetConnection(activity) || getSortBySelection().equalsIgnoreCase(FAVORITES))) {
+            activity.getSupportLoaderManager().restartLoader(0, null, loaderCallbacks).forceLoad();
         } else {
-            Toast.makeText(getActivity(), getString(R.string.error_no_connection), Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, getString(R.string.error_no_connection), Toast.LENGTH_LONG).show();
         }
     }
 
