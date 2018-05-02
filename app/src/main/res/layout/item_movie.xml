@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/movie_item_margin"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/item_poster"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/movie_image_height"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/movie_poster" />
+</RelativeLayout>

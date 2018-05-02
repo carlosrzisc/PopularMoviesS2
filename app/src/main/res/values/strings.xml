@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="movie_poster">Movie poster</string>
+    <string name="error_no_connection">There is no internet connection, please make sure you are connected and try again</string>
+    <string name="sort_title">Sort by</string>
+    <string name="popularity">Popular</string>
+    <string name="rating">Top rated</string>
+    <string name="text_release_date">Release date: %1$s</string>
+    <string name="text_rating">Rating: %1$s</string>
+    <string name="title_trailers">Trailers</string>
+    <string name="content_movie_trailer">Movie trailer</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="title_reviews">Reviews</string>
+    <string name="text_play_video">Play video</string>
+    <string name="favorites">Favorites</string>
+</resources>
